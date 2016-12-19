@@ -5,16 +5,16 @@ const EventEmitter = require('events')
 const pty = require('pty.js')
 
 // http://stackoverflow.com/a/9310752/263986
-function regexEscape(text) {
-	if (text instanceof RegExp)
-		return text
-	return new RegExp(text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'g')
+function regex(text) {
+	const r =  text instanceof RegExp ? text : new RegExp(text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'g')
+	r.lastIndex = 0
+	return r
 }
 
 function autoterm(opts = {}) {
 	let {shell} = opts
 	shell = shell || process.env.SHELL || 'sh'
-	const prompts = [regexEscape(opts.prompt || /\$\s+$/gm)]
+	const prompts = [regex(opts.prompt || /\$\s+$/gm)]
 	const prompt = () => prompts[prompts.length - 1]
 
 	const EVENTS = new EventEmitter()
@@ -50,7 +50,7 @@ function autoterm(opts = {}) {
 			let capturedOutput = ''
 			function processData(d) {
 				capturedOutput += d.toString('utf-8')
-				if (!regexEscape(prmpt).test(ansifilter(capturedOutput))) return
+				if (!regex(prmpt).test(ansifilter(capturedOutput))) return
 
 				EVENTS.removeListener('data', processData)
 				const lines = capturedOutput.split(/\r|\n/)

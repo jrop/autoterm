@@ -1,6 +1,6 @@
 'use strict'
 
-const ansifilter = require('ansifilter')
+const stripAnsi = require('strip-ansi')
 const EventEmitter = require('events')
 const pty = require('pty.js')
 
@@ -50,12 +50,12 @@ function autoterm(opts = {}) {
 			let capturedOutput = ''
 			function processData(d) {
 				capturedOutput += d.toString('utf-8')
-				if (!regex(prmpt).test(ansifilter(capturedOutput))) return
+				if (!regex(prmpt).test(stripAnsi(capturedOutput))) return
 
 				EVENTS.removeListener('data', processData)
 				const lines = capturedOutput.split(/\r|\n/)
 					.filter(s => s !='')
-					.map(s => ansifilter(s))
+					.map(s => stripAnsi(s))
 				yes(lines.slice(1, lines.length - 1).join('\n'))
 			} // processData
 			EVENTS.on('data', processData)

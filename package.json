@@ -1,6 +1,6 @@
 {
   "name": "autoterm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
@@ -15,5 +15,5 @@
     "prepublish": "npm test",
     "test": "node test.js"
   },
-  "repo": "jrop/autoterm"
+  "repository": "jrop/autoterm"
 }

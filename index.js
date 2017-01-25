@@ -34,6 +34,7 @@ function autoterm(opts = {}) {
 	// }}
 
 	// wire I/O {{
+	let pipeKbd = true
 	term.on('data', d => {
 		EVENTS.emit('data', d)
 		if (opts.echo)
@@ -41,11 +42,16 @@ function autoterm(opts = {}) {
 	})
 	if (opts.echo) {
 		process.stdin.setRawMode(true)
-		process.stdin.on('data', d => term.write(d))
+		process.stdin.on('data', d => pipeKbd ? term.write(d) : null)
 	}
 	// }}
 
 	return {
+		kbd(onOff) {
+			pipeKbd = onOff
+			return this
+		},
+
 		run: (cmd, prmpt = prompt()) => new Promise(yes => {
 			let capturedOutput = ''
 			function processData(d) {

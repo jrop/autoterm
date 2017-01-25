@@ -44,6 +44,17 @@ await t.pop().run('exit') // go back to old prompt recognizer
 
 This is useful for if you SSH into a server that has a different prompt than the computer `autoterm` starts executing commands on.
 
+If you need to disconnect stdin from a running TTY, just call `kbd(false)`.  You can later turn it back on with `kbd(true)`.  This is useful if you want to automate two different terminals at once, and choose which one to send keyboard data to.
+
+## API
+
+```js
+kbd(pipeKeyboardToTTY: boolean)
+run(cmd: string, prompt?: string|RegExp): Promise<string>
+push(prompt: string|RegExp)
+pop()
+```
+
 ## License
 ISC License (ISC)
 Copyright (c) 2016, Jonathan Apodaca <jrapodaca@gmail.com>

@@ -1,5 +1,7 @@
 # autoterm
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jrop/autoterm.svg)](https://greenkeeper.io/)
+
 Automate interactive terminal sessions with JavaScript
 
 ## Installation

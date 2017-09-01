@@ -5,11 +5,11 @@
   "license": "MIT",
   "dependencies": {
     "pty.js": "^0.3.1",
-    "strip-ansi": "^3.0.1"
+    "strip-ansi": "^4.0.0"
   },
   "devDependencies": {
     "co": "^4.6.0",
-    "eslint": "^3.12.2"
+    "eslint": "^4.5.0"
   },
   "scripts": {
     "prepublish": "npm test",
